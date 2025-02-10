@@ -1,5 +1,5 @@
 "use client";
-import './App.css';
+import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Table, Input, Card } from "antd";
 import { ColumnType } from "antd/es/table";
@@ -9,9 +9,9 @@ export default function DataTable() {
   const [data, setData] = useState<any[]>([]);
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
 
-  // Fetch data from Flask API
+  const endpoint = process.env.REACT_APP_API_ENDPOINT!;
   async function fetchData(filters = {}) {
-    const response = await fetch("http://127.0.0.1:8000/filter", {
+    const response = await fetch(endpoint + "/filter", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(Object.entries(filters)),

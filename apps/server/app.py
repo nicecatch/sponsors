@@ -1,12 +1,18 @@
 from flask import Flask, render_template, jsonify, request
 from licensed.licensed import CSVLoader
 from flask_cors import CORS
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = Flask(__name__)
 
+api_endpoint = os.getenv('API_ENDPOINT')
+
 csv_loader = CSVLoader("licensed/list.csv.zip")
 
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/*": {"origins": api_endpoint}})
 
 @app.route('/get-columns', methods=['GET'])
 def get_columns():
